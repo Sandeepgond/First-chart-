@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="month" type="text" placeholder="month" >
+    <input id="attendence" type="text" placeholder="attendence">
+    <input id="performance" type="text" placeholder="performance">
+    <button id="btn" >Add New Data</button>
+    <canvas id="chart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <button id="remove">Delete Last Data</button>  
+</body>
+<script type="text/javascript">
+    let ctx,chart;
+    // let y=[]
+    window.addEventListener("load",function(){
+        
+        let btn=document.getElementById("btn")
+        btn.addEventListener("click",function(){
+            let month=document.getElementById("month").value
+            let attendence=document.getElementById("attendence").value
+            let performance=document.getElementById("performance").value
+            let payload={month,attendence,performance}
+            addData(chart,payload)
+        })
+
+        let remove=document.getElementById("remove")
+        remove.addEventListener("click",function(){  
+            removeData(chart)
+        })
+        ctx=document.getElementById("chart")
+        chart=new Chart(ctx,{
+            type:"bar",
+            data:{
+                labels:["January","Feb","March","April","May"],
+                datasets:[
+                    {
+                        label:"attendence",
+                        data:[10,12,14,16,38],
+                        // backgroundColor:
+    
+                    },
+                    {
+                        label:"performance",
+                        data:[60,50,35,78,98]
+    
+                    },
+                    {
+                        label:"test-performance",
+                        data:[64,89,76,100,95]
+    
+                    },
+                ],
+                borderWidth:1
+            },
+            // options: {
+            //     scales: {
+            //         y: {
+            //             beginAtZero: true
+            //         }
+            //     }
+            // }
+        })
+
+    })
+   
+     function addData(chart,{month,attendence,performance}){
+        chart.data.labels.push(month)
+        // console.log(month)
+        chart.data.datasets[0].data.push(attendence)
+        chart.data.datasets[1].data.push(performance)
+        chart.update()
+     }
+     
+
+     function removeData(chart){
+        chart.data.labels.pop(month)
+        // console.log(month)
+        chart.data.datasets[0].data.pop(attendence)
+        chart.data.datasets[1].data.pop(performance)
+        chart.update()
+     }
+
+</script>
+</html>
